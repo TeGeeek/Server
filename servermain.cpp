@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
         }
         else
         {
-            printf("[x]Listening..\n");
+            printf("Server::  About to listen on port %hu...\n", ntohs(serv_addr.sin_port));
         }
 
         if ((listenTo = accept(sockInt, (struct sockaddr*) & theirAddr, &theirAddress_len)) == -1)
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
 
         printf("--Client connected--\n [x]checking client protocol\n");
 
-        send(listenTo, protocol, sizeof(protocol), 0);
+        send(listenTo, protocol, strlen(protocol), 0);
 
         recv(listenTo, clientMsg, clientMsgLen, 0);
         if (strstr(clientMsg, "OK") != NULL)
@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
                     printf("[x]Value %d: %8.8g\n", i + 1, fval[i]);
                 }
 
-                sprintf(calcMsgFinal, "%s\n%8.8g\n%8.8g\n", oper, fval[0], fval[1]);
+                sprintf(calcMsgFinal, "%s %8.8g %8.8g ", oper, fval[0], fval[1]);
 
                 if (strcmp(oper, "fadd") == 0)
                 {
@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) {
                     un[i] = htons((int)fval[i]);
                     printf("[x]Val%d:%d\n", i + 1, (int)fval[i]);
                 }
-                sprintf(calcMsgFinal, "%s\n%d\n\%d\n", oper, un[0], un[1]);
+                sprintf(calcMsgFinal, "%s %d %d", oper, un[0], un[1]);
 
                 if (strcmp(oper, "add") == 0)
                 {
@@ -182,7 +182,7 @@ int main(int argc, char* argv[]) {
                   
             }
 
-            send(listenTo, calcMsgFinal, sizeof(calcMsgFinal), 0);
+            send(listenTo, calcMsgFinal, strlen(calcMsgFinal), 0);
             printf("\n[x]Sent information to the client\n");
             memset(clientMsg, 0, clientMsgLen);
             recv(listenTo, clientMsg, clientMsgLen, 0);
@@ -192,18 +192,19 @@ int main(int argc, char* argv[]) {
             {
                 
                 printf("[x]Server result: %s\n", result);
+                
 
-                if (strcmp(result, clientMsg) == 0)
+                if (strtod(result) == strtod(client))
                 {
                     char correctCalc[3] = "OK";
                     printf("[x]Results match\n");
-                    send(listenTo, correctCalc, sizeof(correctCalc), 0);
+                    send(listenTo, correctCalc, strlen(correctCalc), 0);
                 }
                 else
                 {
                     char correctCalc[6] = "ERROR";
                     printf("[x]Results didnt match\n");
-                    send(listenTo, correctCalc, sizeof(correctCalc), 0);
+                    send(listenTo, correctCalc, strlen(correctCalc), 0);
                 }
             }
             else
@@ -211,17 +212,17 @@ int main(int argc, char* argv[]) {
 
                 printf("[x]Server result: %s\n", result);
 
-                if (strcmp(result, clientMsg) == 0)
+                if (stoi(result) == stoi(clientMsg)
                 {
                     char correctCalc[3] = "OK";
                     printf("[x]Results match\n");
-                    send(listenTo, correctCalc, sizeof(correctCalc), 0);
+                    send(listenTo, correctCalc, strlen(correctCalc), 0);
                 }
                 else
                 {
                     char correctCalc[6] = "ERROR";
                     printf("[x]Results didnt match\n");
-                    send(listenTo, correctCalc, sizeof(correctCalc), 0);
+                    send(listenTo, correctCalc, strlen(correctCalc), 0);
                 }
             }
 
