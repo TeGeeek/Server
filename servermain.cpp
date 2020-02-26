@@ -126,27 +126,27 @@ int main(int argc, char* argv[]) {
                     printf("[x]Value %d: %8.8g\n", i + 1, fval[i]);
                 }
 
-                sprintf(calcMsgFinal, "%s %8.8g %8.8g ", oper, fval[0], fval[1]);
+                sprintf(calcMsgFinal, "%s\n%8.8g\n%8.8g ", oper, fval[0], fval[1]);
 
                 if (strcmp(oper, "fadd") == 0)
                 {
-                    printf("[x]Operation: Addition\n");
+                    printf("[x]Operation: Addition");
                     sprintf(result, "%8.8g", (fval[0] + fval[1]));
                 }
                 else if(strcmp(oper, "fsub") == 0)
                 {
-                    printf("[x]Operation: Subtraction\n");
+                    printf("[x]Operation: Subtraction");
                     sprintf(result, "%8.8g", (fval[0] - fval[1]));
                 }
                 else if(strcmp(oper, "fmul") == 0 )
                 {
-                    printf("[x]Operation: Multi\n");
+                    printf("[x]Operation: Multi");
                     sprintf(result, "%8.8g", (fval[0] * fval[1]));
                 }
                 else if (strcmp(oper, "fdiv") == 0)
                 {
                     printf("[x]Operation: Division");
-                    sprintf(result, "%.8g", (fval[0] / fval[1]));
+                    sprintf(result, "%8.8g", (fval[0] / fval[1]));
                 }
 
             }
@@ -159,11 +159,11 @@ int main(int argc, char* argv[]) {
                     un[i] = htons((int)fval[i]);
                     printf("[x]Val%d:%d\n", i + 1, (int)fval[i]);
                 }
-                sprintf(calcMsgFinal, "%s %d %d", oper, un[0], un[1]);
+                sprintf(calcMsgFinal, "%s\n%d\n%d", oper, un[0], un[1]);
 
                 if (strcmp(oper, "add") == 0)
                 {
-                    printf("[x]Operation: Addition\n");
+                    printf("[x]Operation: Addition");
                     sprintf(result, "%d", (int)(fval[0] + fval[1]));
                 }
                 else if (strcmp(oper, "sub") == 0)
