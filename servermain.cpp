@@ -54,6 +54,8 @@ int main(int argc, char* argv[]) {
     guide.ai_socktype = SOCK_STREAM;
     guide.ai_flags = AI_PASSIVE;
 
+
+
     if ((rV = getaddrinfo(NULL, THISPORT, &guide, &serverInfo)) != 0)
     {
     fprintf(stderr, "Address info &s\n", gai_strerror(rV));
@@ -93,7 +95,7 @@ int main(int argc, char* argv[]) {
         }
         else
         {
-            printf("Server::  About to listen on port %hu...\n", ntohs(serv_addr.sin_port));
+            printf("Server::  About to listen on port %hu...\n", atoi(argv[1]));
         }
 
         if ((listenTo = accept(sockInt, (struct sockaddr*) & theirAddr, &theirAddress_len)) == -1)
@@ -194,7 +196,7 @@ int main(int argc, char* argv[]) {
                 printf("[x]Server result: %s\n", result);
                 
 
-                if (strtod(result) == strtod(client))
+                if (atof(result) == atof(clientMsg))
                 {
                     char correctCalc[3] = "OK";
                     printf("[x]Results match\n");
@@ -212,7 +214,7 @@ int main(int argc, char* argv[]) {
 
                 printf("[x]Server result: %s\n", result);
 
-                if (stoi(result) == stoi(clientMsg)
+                if (atoi(result) == atoi(clientMsg))
                 {
                     char correctCalc[3] = "OK";
                     printf("[x]Results match\n");
