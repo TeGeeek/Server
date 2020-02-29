@@ -54,9 +54,7 @@ int main(int argc, char* argv[]) {
     guide.ai_socktype = SOCK_STREAM;
     guide.ai_flags = AI_PASSIVE;
 
-
-
-    if ((rV = getaddrinfo(NULL, THISPORT, &guide, &serverInfo)) != 0)
+    if ((rV = getaddrinfo(NULL, argv[1], &guide, &serverInfo)) != 0)
     {
     fprintf(stderr, "Address info &s\n", gai_strerror(rV));
     exit(0);
@@ -95,7 +93,7 @@ int main(int argc, char* argv[]) {
         }
         else
         {
-            printf("Server::  About to listen on port %hu...\n", atoi(argv[1]));
+            printf("[x]Listening..\n");
         }
 
         if ((listenTo = accept(sockInt, (struct sockaddr*) & theirAddr, &theirAddress_len)) == -1)
@@ -126,21 +124,21 @@ int main(int argc, char* argv[]) {
                     printf("[x]Value %d: %8.8g\n", i + 1, fval[i]);
                 }
 
-                sprintf(calcMsgFinal, "%s\n%8.8g\n%8.8g ", oper, fval[0], fval[1]);
+                sprintf(calcMsgFinal, "%s\n%8.8g\n%8.8g\n", oper, fval[0], fval[1]);
 
                 if (strcmp(oper, "fadd") == 0)
                 {
-                    printf("[x]Operation: Addition");
+                    printf("[x]Operation: Addition\n");
                     sprintf(result, "%8.8g", (fval[0] + fval[1]));
                 }
                 else if(strcmp(oper, "fsub") == 0)
                 {
-                    printf("[x]Operation: Subtraction");
+                    printf("[x]Operation: Subtraction\n");
                     sprintf(result, "%8.8g", (fval[0] - fval[1]));
                 }
                 else if(strcmp(oper, "fmul") == 0 )
                 {
-                    printf("[x]Operation: Multi");
+                    printf("[x]Operation: Multi\n");
                     sprintf(result, "%8.8g", (fval[0] * fval[1]));
                 }
                 else if (strcmp(oper, "fdiv") == 0)
@@ -159,11 +157,11 @@ int main(int argc, char* argv[]) {
                     un[i] = htons((int)fval[i]);
                     printf("[x]Val%d:%d\n", i + 1, (int)fval[i]);
                 }
-                sprintf(calcMsgFinal, "%s\n%d\n%d", oper, un[0], un[1]);
+                sprintf(calcMsgFinal, "%s\n%d\n\%d\n", oper, un[0], un[1]);
 
                 if (strcmp(oper, "add") == 0)
                 {
-                    printf("[x]Operation: Addition");
+                    printf("[x]Operation: Addition\n");
                     sprintf(result, "%d", (int)(fval[0] + fval[1]));
                 }
                 else if (strcmp(oper, "sub") == 0)
@@ -192,9 +190,9 @@ int main(int argc, char* argv[]) {
             
             if (strchr(oper, 'f') != NULL)
             {
-                
+
                 printf("[x]Server result: %s\n", result);
-                
+
 
                 if (atof(result) == atof(clientMsg))
                 {

@@ -74,9 +74,9 @@ int main(int argc, char* argv[]) {
     {
         memset(serverMsg, 0, serverMsg_len);
         char temp[40] = "OK";
-        send(sockInt, temp, sizeof(temp), 0);
+        send(sockInt, temp, strlen(temp), 0);
         memset(temp, 0, sizeof(temp));
-        recv(sockInt, &serverMsg, serverMsg_len, 0);
+        recv(sockInt, serverMsg, serverMsg_len, 0);
         uint16_t currentMsg;
         uint16_t currentTemp = 0;
 
@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
             for (int i = 0; i < 2; i++)
             {
 
-                memset(temp, 0, strlen(temp));
+                memset(temp, 0, sizeof(temp));
                 currentTemp = 0;
 
                 for (int j = currentMsg; j < serverMsg_len; j++)
@@ -124,29 +124,28 @@ int main(int argc, char* argv[]) {
 
             if (strcmp(oper, "fadd") == 0)
             {
-                printf("[x]Operation: Addition");
+                printf("Operation: Addition\n");
                 sprintf(result, "%8.8g", (fval[0] + fval[1]));
             }
             else if (strcmp(oper, "fsub") == 0)
             {
-                printf("[x]Operation: Subtraction");
+                printf("Operation: Subtraction\n");
                 sprintf(result, "%8.8g", (fval[0] - fval[1]));
             }
             else if (strcmp(oper, "fmul") == 0)
             {
-                printf("[x]Operation: Multi");
+                printf("Operation: Multi\n");
                 sprintf(result, "%8.8g", (fval[0] * fval[1]));
             }
             else if (strcmp(oper, "fdiv") == 0)
             {
-                printf("[x]Operation: Division");
+                printf("Operation: Division\n");
                 sprintf(result, "%8.8g", (fval[0] / fval[1]));
             }
-            printf("Result: %s\n", result);
+
             sprintf(serverMsg, "%s", result);
-            
-            serverMsg_len = strlen(serverMsg);
-            send(sockInt, serverMsg, serverMsg_len, 0);
+            printf("Result: %s\n", serverMsg);
+            send(sockInt, serverMsg, strlen(serverMsg), 0);
 
         }
 
@@ -155,7 +154,7 @@ int main(int argc, char* argv[]) {
             for (int i = 0; i < 2; i++)
             {
 
-                memset(temp, 0, strlen(temp));
+                memset(temp, 0, sizeof(temp));
                 currentTemp = 0;
                 
                 for (int j = currentMsg; j < serverMsg_len; j++)
@@ -178,31 +177,30 @@ int main(int argc, char* argv[]) {
                 printf("[x]Val %d: %d\n", i + 1, (int)fval[i]);
 
             }
+
             if (strcmp(oper, "add") == 0)
             {
-                printf("[x]Operation: Addition");
+                printf("Operation: Addition\n");
                 sprintf(result, "%d", (int)(fval[0] + fval[1]));
             }
             else if (strcmp(oper, "sub") == 0)
             {
-                printf("[x]Operation: Subtraction");
+                printf("Operation: Subtraction\n");
                 sprintf(result, "%d", (int)(fval[0] - fval[1]));
             }
             else if (strcmp(oper, "mul") == 0)
             {
-                printf("[x]Operation: Multi");
+                printf("Operation: Multiplication\n");
                 sprintf(result, "%d", (int)(fval[0] * fval[1]));
             }
             else if (strcmp(oper, "div") == 0)
             {
-                printf("[x]Operation: Division");
+                printf("Operation: Division\n");
                 sprintf(result, "%d", (int)(fval[0] / fval[1]));
             }
-            printf("Result: %s\n", result);
             sprintf(serverMsg, "%s", result);
-            
-            serverMsg_len = strlen(serverMsg);
-            send(sockInt, serverMsg, serverMsg_len, 0);
+            printf("Result: %s\n", serverMsg);
+            send(sockInt, serverMsg, strlen(serverMsg), 0);
 
         }
 
