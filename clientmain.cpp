@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) {
                 }
 
                 sscanf(temp, "%d", &nu);
-                fval[i] = ntohs(nu);
+                fval[i] = nu;
                 printf("[x]Val %d: %d\n", i + 1, (int)fval[i]);
 
             }
